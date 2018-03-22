@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Figuras
@@ -32,7 +32,8 @@ namespace Figuras
             var exit = false;
             string input = "";
 
-            do {
+            do
+            {
                 paint.Consola.Escribir(paint.Toolbar.MostrarAcciones());
                 input = paint.Consola.Leer();
                 Acciones accion = (Acciones)Convert.ToInt32(input);
@@ -50,10 +51,10 @@ namespace Figuras
                 {
                     exit = true;
                 }
-                
-                
-                
-            } while (!exit);                                             
+
+
+
+            } while (!exit);
         }
     }
 }
