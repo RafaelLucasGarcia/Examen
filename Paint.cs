@@ -27,7 +27,11 @@ namespace Figuras
         Salir,
     }
 
-    public class Figura
+    public interface IFigura{
+        string ToString();
+
+    }
+    public class Figura : IFigura
     {
         public Figura(Formas forma = Formas.Cuadrado, Colores fondo = Colores.Blanco, Colores borde = Colores.Negro)
         {
@@ -43,12 +47,14 @@ namespace Figuras
         {
             return "Forma: " + Forma + ",  Fondo: " + Fondo + ", Borde: " + Borde;
         }
-
     }
 
-    public class Lienzo
-    {
+    public interface ILienzo{        
+        void AnadirFigura(Figura f);
+    }
 
+    public class Lienzo : ILienzo
+    {
         public List<Figura> Figuras { get; }
 
         public Lienzo(List<Figura> figuras = null)
@@ -59,12 +65,15 @@ namespace Figuras
         {
             this.Figuras.Add(f);
         }
-
     }
 
-    public class Consola
-    {
+    public interface IConsola{
+        void Escribir(string s);
+        string Leer();
+    }
 
+    public class Consola : IConsola
+    {
         public void Escribir(string s = "")
         {
             Console.WriteLine(s);
@@ -75,7 +84,16 @@ namespace Figuras
         }
     }
 
-    public class Toolbar
+    public interface IToolbar{
+        Colores SeleccionarColor(string s);
+        Formas SeleccionarForma(string s);
+        string MostrarAcciones();
+        string MostrarColores();
+        string MostrarFormas();
+
+    }
+
+    public class Toolbar : IToolbar
     {
         public List<Colores> ColoresDisponibles { get; }
         public List<Formas> FormasDisponibles { get; }
@@ -154,8 +172,13 @@ namespace Figuras
         }
 
     }
+    public interface IPaint{
+        string VerFiguras();
+        void NuevaFigura();
 
-    public class Paint
+    }
+
+    public class Paint : IPaint
     {
         public Paint(Lienzo l, Toolbar t, Consola c)
         {
