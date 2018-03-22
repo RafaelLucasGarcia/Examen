@@ -1,17 +1,19 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Figuras
 {
-    public enum Colores {
+    public enum Colores
+    {
         Blanco,
         Rojo,
         Verde,
         Azul,
         Negro
     }
-    public enum Formas {
+    public enum Formas
+    {
         Cuadrado,
         Circulo,
         Triangulo,
@@ -22,10 +24,11 @@ namespace Figuras
     {
         Nueva,
         Ver,
-        Salir,        
+        Salir,
     }
 
-    public class Figura {
+    public class Figura
+    {
         public Figura(Formas forma = Formas.Cuadrado, Colores fondo = Colores.Blanco, Colores borde = Colores.Negro)
         {
             Fondo = fondo;
@@ -36,31 +39,38 @@ namespace Figuras
         public Colores Borde { get; set; }
         public Formas Forma { get; set; }
 
-        override public string ToString() {
+        override public string ToString()
+        {
             return "Forma: " + Forma + ",  Fondo: " + Fondo + ", Borde: " + Borde;
         }
 
-    }   
+    }
 
-    public class Lienzo {
+    public class Lienzo
+    {
 
         public List<Figura> Figuras { get; }
 
-        public Lienzo(List<Figura> figuras = null){
+        public Lienzo(List<Figura> figuras = null)
+        {
             Figuras = figuras ?? new List<Figura>();
         }
-        public void AnadirFigura(Figura f) {
+        public void AnadirFigura(Figura f)
+        {
             this.Figuras.Add(f);
         }
-        
+
     }
 
-    public class Consola {
+    public class Consola
+    {
 
-        public void Escribir(string s = "") {
+        public void Escribir(string s = "")
+        {
             Console.WriteLine(s);
         }
-        public string Leer() {
+        public string Leer()
+        {
             return Console.ReadLine();
         }
     }
@@ -76,15 +86,16 @@ namespace Figuras
             ColoresDisponibles = c;
             FormasDisponibles = f;
             AccionesDisponibles = a;
-            
+
         }
 
         public Formas SeleccionarForma(string input)
-        {            
+        {
             var numeroFormas = Enum.GetNames(typeof(Formas)).Length;
             int opcion = Convert.ToInt32(input);
 
-            if (opcion < 0 || opcion > numeroFormas) {
+            if (opcion < 0 || opcion > numeroFormas)
+            {
                 throw new Exception("Forma seleccionada no disponible");
             }
             Formas forma = (Formas)opcion;
@@ -109,7 +120,7 @@ namespace Figuras
         {
             string resultado = "";
             int indice = 0;
-            foreach (var opcion in Toolbar.FormasDisponibles)
+            foreach (var opcion in FormasDisponibles)
             {
                 resultado += indice + " - " + opcion.ToString() + '\n';
                 indice++;
@@ -121,7 +132,7 @@ namespace Figuras
         {
             string resultado = "";
             int indice = 0;
-            foreach (var opcion in Toolbar.ColoresDisponibles)
+            foreach (var opcion in ColoresDisponibles)
             {
                 resultado += indice + " - " + opcion.ToString() + '\n';
                 indice++;
@@ -134,7 +145,7 @@ namespace Figuras
             string resultado = "";
             int indice = 0;
 
-            foreach (var opcion in Toolbar.AccionesDisponibles)
+            foreach (var opcion in AccionesDisponibles)
             {
                 resultado += indice + " - " + opcion.ToString() + '\n';
                 indice++;
@@ -146,7 +157,8 @@ namespace Figuras
 
     public class Paint
     {
-        public Paint(Lienzo l, Toolbar t, Consola c) {
+        public Paint(Lienzo l, Toolbar t, Consola c)
+        {
             Lienzo = l;
             Toolbar = t;
             Consola = c;
@@ -156,8 +168,9 @@ namespace Figuras
         public Toolbar Toolbar { get; set; }
         public Consola Consola { get; set; }
 
-        public string VerFiguras() {
-            var figuras = Lienzo.Figuras;            
+        public string VerFiguras()
+        {
+            var figuras = Lienzo.Figuras;
             StringBuilder sb = new StringBuilder();
 
             foreach (var actual in figuras)
@@ -165,25 +178,26 @@ namespace Figuras
                 sb.Append(actual.ToString());
                 sb.Append("\n");
             }
-            return sb.ToString();           
+            return sb.ToString();
         }
 
-        public void NuevaFigura() {
+        public void NuevaFigura()
+        {
 
             Consola.Escribir(Toolbar.MostrarFormas());
-            string input = Consola.Leer();
-            Formas Forma = Toolbar.SeleccionarForma(input);
+            string FormaInput = Consola.Leer();
+            Formas Forma = Toolbar.SeleccionarForma(FormaInput);
 
             Consola.Escribir(Toolbar.MostrarColores());
-            string input = Consola.Leer();
-            Colores Borde = Toolbar.SeleccionarColor(input);
+            string BordeInput = Consola.Leer();
+            Colores Borde = Toolbar.SeleccionarColor(BordeInput);
 
             Consola.Escribir(Toolbar.MostrarColores());
-            string input = Consola.Leer();
-            Colores Fondo = Toolbar.SeleccionarColor(input);
-            
+            string FondoInput = Consola.Leer();
+            Colores Fondo = Toolbar.SeleccionarColor(FondoInput);
+
             var figura = new Figura(Forma, Fondo, Borde);
             Lienzo.AnadirFigura(figura);
-        }        
+        }
     }
 }
