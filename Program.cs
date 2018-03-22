@@ -33,7 +33,7 @@ namespace Figuras
             string input = "";
 
             do {
-                paint.Consola.Escribir(paint.MostrarAcciones());
+                paint.Consola.Escribir(paint.Toolbar.MostrarAcciones());
                 input = paint.Consola.Leer();
                 Acciones accion = (Acciones)Convert.ToInt32(input);
 
